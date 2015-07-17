@@ -1535,13 +1535,7 @@ AbstractXHRObject.prototype._start = function(method, url, payload, opts) {
     return;
   }
 
-  if ((!opts || !opts.noCredentials) && AbstractXHRObject.supportsCORS) {
-    debug('withCredentials');
-    // Mozilla docs says https://developer.mozilla.org/en/XMLHttpRequest :
-    // "This never affects same-site requests."
 
-    this.xhr.withCredentials = 'true';
-  }
   if (opts && opts.headers) {
     for (var key in opts.headers) {
       this.xhr.setRequestHeader(key, opts.headers[key]);
@@ -1646,10 +1640,6 @@ if (!AbstractXHRObject.enabled && (axo in global)) {
 }
 
 var cors = false;
-try {
-  cors = 'withCredentials' in new XHR();
-} catch (ignored) {}
-
 AbstractXHRObject.supportsCORS = cors;
 
 module.exports = AbstractXHRObject;
